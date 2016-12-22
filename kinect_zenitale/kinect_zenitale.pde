@@ -67,6 +67,13 @@ void draw() {
   theBlobDetection.computeBlobs(img.pixels);
   drawBlobsAndEdges(true, true);
 
+  /* =============== 
+     ===============
+ INIZIO DEFINIZIONE AREE DI ATTIVAZIONE DEI MARTELLI
+     ===============
+     ===============
+  */
+
   // area di attivazione martello 1
   color Martello1 = color(0, 255, 150);
   fill(Martello1); //verde chiaro
@@ -84,25 +91,30 @@ void draw() {
   int mA = int(altezzaMin);
   int mL = int(larghezzaMin);
 
+  //calcolo il colore del centroide del blob
   color centroidColor = get(bX, bY);
-  if ( mA > 15 && mA > 15) {  //solo se il blob è più grande di 10x10
-    if (centroidColor == Martello1) { //controlla se il centroide è nell'area del martello1
+
+  if ( mA > 15 && mA > 15) {  //solo se il blob è più grande di 15x15
+    //se il colore del centroide e quello dell'area del martello coincidono vuol dire che qualcuno è nell'area
+    if (centroidColor == Martello1) { //controllo area del martello1
       println("martello 1 attivo");
+      //inserire arduino qua
     }
 
-    if (centroidColor == Martello2) { //controlla se il centroide è nell'area del martello2
+    if (centroidColor == Martello2) { //controllo area del martello2
       println("martello 2 attivo");
+      //inserire arduino qua
     }
   }
 }
 
 /* ==============================
-=================================
-=================================
-CODICE LIBRERIA BLOB DETECTION
-=================================
-================================= 
-================================= */
+ =================================
+ =================================
+ CODICE LIBRERIA BLOB DETECTION
+ =================================
+ ================================= 
+ ================================= */
 
 void drawBlobsAndEdges(boolean drawBlobs, boolean drawEdges)
 {
