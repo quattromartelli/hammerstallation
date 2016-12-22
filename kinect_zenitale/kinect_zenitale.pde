@@ -13,6 +13,9 @@ PImage img;
 //dichiaro due variabili che dopo userò per trovare il centroide del blob
 float blobCenterX;
 float blobCenterY;
+//due variabili per settare il treshold di grandezza per i blob
+float larghezzaMin;
+float altezzaMin;
 
 /*setto come distanza massima l'altezza sopra cui vengono iniziati a visualizzare i punti, 
  praticamente l'altezza minima che debba avere una persona affinchè funzioni tutto*/
@@ -65,31 +68,41 @@ void draw() {
   drawBlobsAndEdges(true, true);
 
   // area di attivazione martello 1
-  color Martello1 = color(0, 255, 0);
-  fill(Martello1); //verde
+  color Martello1 = color(0, 255, 150);
+  fill(Martello1); //verde chiaro
   rect(100, 100, 50, 50, 15);
   // area di attivazione martello 2
-  color Martello2 = color(0, 0, 255);
-  fill(Martello2); //blu
+  color Martello2 = color(0, 150, 255);
+  fill(Martello2); //blu chiaro
   rect(100, 300, 50, 50, 15);
 
   //controllo se il centro del blob è dentro un area
+  //rendo intere le variabili per il centroide e il treshold di grandezza
   int bX = int(blobCenterX);
   int bY = int(blobCenterY);
-  
+
+  int mA = int(altezzaMin);
+  int mL = int(larghezzaMin);
+
   color centroidColor = get(bX, bY);
-  
-  if (centroidColor == Martello1) {
-    println("martello 1 attivo");
+  if ( mA > 15 && mA > 15) {  //solo se il blob è più grande di 10x10
+    if (centroidColor == Martello1) { //controlla se il centroide è nell'area del martello1
+      println("martello 1 attivo");
+    }
+
+    if (centroidColor == Martello2) { //controlla se il centroide è nell'area del martello2
+      println("martello 2 attivo");
+    }
   }
-  
-  if (centroidColor == Martello2) {
-    println("martello 2 attivo");
-  }
-  
 }
 
-/* CODICE LIBRERIA BLOB DETECTION*/
+/* ==============================
+=================================
+=================================
+CODICE LIBRERIA BLOB DETECTION
+=================================
+================================= 
+================================= */
 
 void drawBlobsAndEdges(boolean drawBlobs, boolean drawEdges)
 {
@@ -127,9 +140,12 @@ void drawBlobsAndEdges(boolean drawBlobs, boolean drawEdges)
           b.xMin*width, b.yMin*height, 
           b.w*width, b.h*height
           );
-          //calcolo il centro del blob
+        //calcolo il centro del blob
         blobCenterX = b.xMin*width + b.w*width / 2;
         blobCenterY = b.yMin*height + b.h*height / 2;
+        //salvo larghezza e altezza del blob
+        larghezzaMin = b.w*width;
+        altezzaMin = b.h*height;
       }
     }
   }
