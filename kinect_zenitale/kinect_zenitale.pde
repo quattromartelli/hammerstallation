@@ -8,7 +8,11 @@ import blobDetection.*;
 Kinect kinect;
 BlobDetection theBlobDetection;
 
+//creo l'immagine sulla quale stampo i pixel con i dati di kinect
 PImage img;
+//dichiaro due variabili che dopo userò per trovare il centroide del blob
+float blobCenterX;
+float blobCenterY;
 
 /*setto come distanza massima l'altezza sopra cui vengono iniziati a visualizzare i punti, 
  praticamente l'altezza minima che debba avere una persona affinchè funzioni tutto*/
@@ -26,10 +30,10 @@ void setup() {
   kinect.initDepth();
   img = createImage(kinect.width, kinect.height, RGB);
 
-  /*inizializzo ancora la blobdetection, prendendo come visione tutta la visione di kinect. 
-  blobizzo solo i pixel più chiari di un tot */
+  //inizializzo ancora la blobdetection, passando alla libreria l'immagine di kinect
   theBlobDetection = new BlobDetection(img.width, img.height);
   theBlobDetection.setPosDiscrimination(true);
+  //treshold di luminosità per i pixel affinchè i blob vengano creati
   theBlobDetection.setThreshold(0.2f);
 }
 
@@ -51,7 +55,7 @@ void draw() {
       }
     }
   }
-  
+
   img.updatePixels();
   image(img, 0, 0);
 
@@ -59,12 +63,34 @@ void draw() {
   fastblur(img, 2);
   theBlobDetection.computeBlobs(img.pixels);
   drawBlobsAndEdges(true, true);
+
+  // area di attivazione martello 1
+  color Martello1 = color(0, 255, 0);
+  fill(Martello1); //verde
+  rect(100, 100, 50, 50, 15);
+  // area di attivazione martello 2
+  color Martello2 = color(0, 0, 255);
+  fill(Martello2); //blu
+  rect(100, 300, 50, 50, 15);
+
+  //controllo se il centro del blob è dentro un area
+  int bX = int(blobCenterX);
+  int bY = int(blobCenterY);
+  
+  color centroidColor = get(bX, bY);
+  
+  if (centroidColor == Martello1) {
+    println("martello 1 attivo");
+  }
+  
+  if (centroidColor == Martello2) {
+    println("martello 2 attivo");
+  }
+  
 }
 
-/* CODICE LIBRERIA BLOB DETECTION
------ qua tocca trovare il centroide di ogni blob e far si che ogni volta che esso si trova in un area allora
- far scattare un martello -----*/
- 
+/* CODICE LIBRERIA BLOB DETECTION*/
+
 void drawBlobsAndEdges(boolean drawBlobs, boolean drawEdges)
 {
   noFill();
@@ -101,6 +127,9 @@ void drawBlobsAndEdges(boolean drawBlobs, boolean drawEdges)
           b.xMin*width, b.yMin*height, 
           b.w*width, b.h*height
           );
+          //calcolo il centro del blob
+        blobCenterX = b.xMin*width + b.w*width / 2;
+        blobCenterY = b.yMin*height + b.h*height / 2;
       }
     }
   }
