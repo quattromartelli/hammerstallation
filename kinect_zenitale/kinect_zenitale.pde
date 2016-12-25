@@ -8,7 +8,14 @@ import blobDetection.*;
 Kinect kinect;
 BlobDetection theBlobDetection;
 
+//creo l'immagine sulla quale stampo i pixel con i dati di kinect
 PImage img;
+//due variabili per settare il treshold di grandezza per i blob 
+int larghezzaBlob;
+int altezzaBlob;
+//booleane per la comunicazione seriale con arduino. se una di queste è vera allora un martello deve essere attivato.
+boolean posizione1;
+boolean posizione2;
 
 /*setto come distanza massima l'altezza sopra cui vengono iniziati a visualizzare i punti, 
  praticamente l'altezza minima che debba avere una persona affinchè funzioni tutto*/
@@ -17,7 +24,16 @@ int distMax = 900;
  ci interessa tipo le cose che potrebbero essere affianco kinect per esempio le robe per fissarlo al soffitto*/
 int distMin = 300;
 
+//setto i colori per le aree di attivazione che disegno alla fine del draw()
+color Martello1 = color(0, 255, 150);
+color Martello2 = color(0, 150, 255);
 
+//variabile globale che serve per controllare la posizione del centroide del blob
+int posx;
+int posy;
+
+//variabile globale colore che serve per controllare il colore del pixel cioè la posizione della persona
+color currentColor;
 
 void setup() {
   //inizializzo ancora kinect
@@ -26,10 +42,10 @@ void setup() {
   kinect.initDepth();
   img = createImage(kinect.width, kinect.height, RGB);
 
-  /*inizializzo ancora la blobdetection, prendendo come visione tutta la visione di kinect. 
-  blobizzo solo i pixel più chiari di un tot */
+  //inizializzo ancora la blobdetection, passando alla libreria l'immagine di kinect
   theBlobDetection = new BlobDetection(img.width, img.height);
   theBlobDetection.setPosDiscrimination(true);
+  //treshold di luminosità per i pixel affinchè i blob vengano creati
   theBlobDetection.setThreshold(0.2f);
 }
 
@@ -51,7 +67,7 @@ void draw() {
       }
     }
   }
-  
+
   img.updatePixels();
   image(img, 0, 0);
 
@@ -59,12 +75,53 @@ void draw() {
   fastblur(img, 2);
   theBlobDetection.computeBlobs(img.pixels);
   drawBlobsAndEdges(true, true);
+
+  /* =============== 
+   ===============
+   DISEGNO LE AREE DI ATTIVAZIONE DEI MARTELLI
+   ===============
+   ===============
+   */
+
+  // area di attivazione martello 1
+  fill(Martello1); //verde chiaro
+  rect(100, 100, 50, 50, 15);
+
+  // area di attivazione martello 2
+  fill(Martello2); //blu chiaro
+  rect(100, 300, 50, 50, 15);
+
+
+  /* =============== 
+   ===============
+   INIZIO CODICE PER ARDUINO
+   ===============
+   ===============
+   */
+
+  if (posizione1 == true) {
+    println("martello 1 è attivo");
+    //inserire qui riga che dice ad arduino di tirare su il martello
+  }
+
+
+  if (posizione2 == true) {
+    println("martello 2 è attivo");
+    //inserire qui riga che dice ad arduino di tirare su il martello
+  }
+
+  //prendo il colore alla posizione del centroide del blob (cioè della persona) e la comparo quando disegno i blob e i centroidi dei blob
+  currentColor = get(posx, posy);
 }
 
-/* CODICE LIBRERIA BLOB DETECTION
------ qua tocca trovare il centroide di ogni blob e far si che ogni volta che esso si trova in un area allora
- far scattare un martello -----*/
- 
+/* ==============================
+ =================================
+ =================================
+ CODICE LIBRERIA BLOB DETECTION
+ =================================
+ ================================= 
+ ================================= */
+
 void drawBlobsAndEdges(boolean drawBlobs, boolean drawEdges)
 {
   noFill();
@@ -97,10 +154,25 @@ void drawBlobsAndEdges(boolean drawBlobs, boolean drawEdges)
       {
         strokeWeight(1);
         stroke(255, 0, 0);
+        noFill(); 
         rect(
           b.xMin*width, b.yMin*height, 
           b.w*width, b.h*height
           );
+
+        //salvo larghezza e altezza del blob per creare un treshold di grandezza
+        larghezzaBlob = int(b.w*width);
+        altezzaBlob = int(b.h*height);
+
+        //creo centroide con size treshold, altrimenti fa casini
+        if (larghezzaBlob > 30 && altezzaBlob > 30) {  //il centroide verrà disegnato se il blob è più grande di 30x30
+          BlobCenter bc;  //dichiaro un nuovo centroide
+          bc = new BlobCenter( b.xMin*width+b.w*width/2, b.yMin*height+b.h*height/2); //chiamo il constructor
+          bc.display(); //lo disegno
+          posx = int(bc.unox); //interizzo le coordinate del centro
+          posy = int(bc.duey);
+          bc.check(currentColor);  //controllo la posizione nello spazio
+        }
       }
     }
   }
@@ -185,6 +257,46 @@ void fastblur(PImage img, int radius)
       bsum+=b[p1]-b[p2];
 
       yi+=w;
+    }
+  }
+}
+
+/* ==============================
+ =================================
+ =================================
+ CLASSE BLOB CENTER
+ =================================
+ ================================= 
+ ================================= */
+
+
+class BlobCenter {
+  float unox, duey;
+
+  BlobCenter(float uno, float due) {
+    unox = uno;
+    duey = due;
+  }
+  void display() {
+    fill(255);
+    ellipse (unox, duey, 15, 15);
+  }
+
+
+
+  void check(color areacolor) {
+    //se il colore del pixel della posizione del centroide corrisponde al colore dell'area di un martello, una booleana diventerà true
+    if (areacolor == Martello1) { 
+      posizione1 = true;
+    } else {
+      posizione1= false;
+    }
+
+
+    if (areacolor == Martello2) {
+      posizione2 = true;
+    } else {
+      posizione2 = false;
     }
   }
 }
