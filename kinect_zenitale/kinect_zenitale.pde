@@ -16,6 +16,20 @@ int altezzaBlob;
 //booleane per la comunicazione seriale con arduino. se una di queste è vera allora un martello deve essere attivato.
 boolean posizione1;
 boolean posizione2;
+boolean posizione3;
+boolean posizione4;
+boolean posizione5;
+boolean posizione6;
+boolean posizione7;
+boolean posizione8;
+boolean posizione9;
+boolean posizione10;
+boolean posizione11;
+boolean posizione12;
+boolean posizione13;
+boolean posizione14;
+boolean posizione15;
+
 
 /*setto come distanza massima l'altezza sopra cui vengono iniziati a visualizzare i punti, 
  praticamente l'altezza minima che debba avere una persona affinchè funzioni tutto*/
@@ -27,6 +41,20 @@ int distMin = 300;
 //setto i colori per le aree di attivazione che disegno alla fine del draw()
 color Martello1 = color(0, 255, 150);
 color Martello2 = color(0, 150, 255);
+color Martello3 = color(0, 200, 150);
+color Martello4 = color(0, 150, 200);
+color Martello5 = color(0, 150, 150);
+color Martello6 = color(0, 100, 255);
+color Martello7 = color(100, 255, 150);
+color Martello8 = color(50, 150, 255);
+color Martello9 = color(30, 255, 150);
+color Martello10 = color(50, 150, 235);
+color Martello11 = color(10, 252, 100);
+color Martello12 = color(60, 180, 250);
+color Martello13 = color(20, 225, 120);
+color Martello14 = color(90, 10, 200);
+color Martello15 = color(72, 170, 150);
+
 
 //variabile globale che serve per controllare la posizione del centroide del blob
 int posx;
@@ -84,12 +112,64 @@ void draw() {
    */
 
   // area di attivazione martello 1
-  fill(Martello1); //verde chiaro
-  rect(100, 100, 50, 50, 15);
+  fill(Martello1);
+  rect(30, 100, 70, 20, 15);
 
   // area di attivazione martello 2
-  fill(Martello2); //blu chiaro
-  rect(100, 300, 50, 50, 15);
+  fill(Martello2);
+  rect(30, 200, 70, 20, 15);
+  
+    // area di attivazione martello 3
+  fill(Martello3);
+  rect(30, 300, 70, 20, 15);
+  
+    // area di attivazione martello 4
+  fill(Martello4);
+  rect(150, 100, 70, 20, 15);
+  
+    // area di attivazione martello 5
+  fill(Martello5);
+  rect(150, 200, 70, 20, 15);
+  
+    // area di attivazione martello 6
+  fill(Martello6);
+  rect(150, 300, 70, 20, 15);
+  
+    // area di attivazione martello 7
+  fill(Martello7);
+  rect(250, 100, 70, 20, 15);
+  
+    // area di attivazione martello 8
+  fill(Martello8);
+  rect(250, 200, 70, 20, 15);
+  
+    // area di attivazione martello 9
+  fill(Martello9);
+  rect(250, 300, 70, 20, 15);
+  
+    // area di attivazione martello 10
+  fill(Martello10);
+  rect(350, 100, 70, 20, 15);
+  
+    // area di attivazione martello 11
+  fill(Martello11);
+  rect(350, 200, 70, 20, 15);
+  
+    // area di attivazione martello 12
+  fill(Martello12);
+  rect(350, 300, 70, 20, 15);
+  
+    // area di attivazione martello 13
+  fill(Martello13);
+  rect(450, 100, 70, 20, 15);
+  
+    // area di attivazione martello 14
+  fill(Martello14);
+  rect(450, 200, 70, 20, 15);
+  
+    // area di attivazione martello 15
+  fill(Martello15);
+  rect(450, 300, 70, 20, 15);
 
 
   /* =============== 
@@ -107,6 +187,84 @@ void draw() {
 
   if (posizione2 == true) {
     println("martello 2 è attivo");
+    //inserire qui riga che dice ad arduino di tirare su il martello
+  }
+
+
+  if (posizione3 == true) {
+    println("martello 3 è attivo");
+    //inserire qui riga che dice ad arduino di tirare su il martello
+  }
+
+
+  if (posizione4 == true) {
+    println("martello 4 è attivo");
+    //inserire qui riga che dice ad arduino di tirare su il martello
+  }
+
+
+  if (posizione5 == true) {
+    println("martello 5 è attivo");
+    //inserire qui riga che dice ad arduino di tirare su il martello
+  }
+
+
+  if (posizione6 == true) {
+    println("martello 6 è attivo");
+    //inserire qui riga che dice ad arduino di tirare su il martello
+  }
+
+
+  if (posizione7 == true) {
+    println("martello 7 è attivo");
+    //inserire qui riga che dice ad arduino di tirare su il martello
+  }
+
+
+  if (posizione8 == true) {
+    println("martello 8 è attivo");
+    //inserire qui riga che dice ad arduino di tirare su il martello
+  }
+
+
+  if (posizione9 == true) {
+    println("martello 9 è attivo");
+    //inserire qui riga che dice ad arduino di tirare su il martello
+  }
+
+
+  if (posizione10 == true) {
+    println("martello 10 è attivo");
+    //inserire qui riga che dice ad arduino di tirare su il martello
+  }
+
+
+  if (posizione11 == true) {
+    println("martello 11 è attivo");
+    //inserire qui riga che dice ad arduino di tirare su il martello
+  }
+
+
+  if (posizione12 == true) {
+    println("martello 12 è attivo");
+    //inserire qui riga che dice ad arduino di tirare su il martello
+  }
+
+
+  if (posizione13 == true) {
+    println("martello 13 è attivo");
+    //inserire qui riga che dice ad arduino di tirare su il martello
+  }
+
+
+  if (posizione14 == true) {
+    println("martello 14 è attivo");
+    //inserire qui riga che dice ad arduino di tirare su il martello
+  }
+
+
+  if (posizione15 == true) {
+    println("martello 15 è attivo");
     //inserire qui riga che dice ad arduino di tirare su il martello
   }
 
@@ -297,6 +455,84 @@ class BlobCenter {
       posizione2 = true;
     } else {
       posizione2 = false;
+    }
+
+    if (areacolor == Martello3) {
+      posizione3 = true;
+    } else {
+      posizione3 = false;
+    }
+
+    if (areacolor == Martello4) {
+      posizione4 = true;
+    } else {
+      posizione4 = false;
+    }
+
+    if (areacolor == Martello5) {
+      posizione5 = true;
+    } else {
+      posizione5 = false;
+    }
+
+    if (areacolor == Martello6) {
+      posizione6 = true;
+    } else {
+      posizione6 = false;
+    }
+
+    if (areacolor == Martello7) {
+      posizione7 = true;
+    } else {
+      posizione7 = false;
+    }
+
+    if (areacolor == Martello8) {
+      posizione8 = true;
+    } else {
+      posizione8 = false;
+    }
+
+    if (areacolor == Martello9) {
+      posizione9 = true;
+    } else {
+      posizione9 = false;
+    }
+
+    if (areacolor == Martello10) {
+      posizione10 = true;
+    } else {
+      posizione10 = false;
+    }
+
+    if (areacolor == Martello11) {
+      posizione11 = true;
+    } else {
+      posizione11 = false;
+    }
+
+    if (areacolor == Martello12) {
+      posizione12 = true;
+    } else {
+      posizione12 = false;
+    }
+
+    if (areacolor == Martello13) {
+      posizione13 = true;
+    } else {
+      posizione13 = false;
+    }
+
+    if (areacolor == Martello14) {
+      posizione14 = true;
+    } else {
+      posizione14 = false;
+    }
+
+    if (areacolor == Martello15) {
+      posizione15 = true;
+    } else {
+      posizione15 = false;
     }
   }
 }
