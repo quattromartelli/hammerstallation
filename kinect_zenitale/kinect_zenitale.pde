@@ -4,12 +4,11 @@ import org.openkinect.processing.*;
 import org.openkinect.tests.*;
 import blobDetection.*;
 import processing.serial.*;
-import cc.arduino.*;
 
 //inizializzo kinect e blobdetection
 Kinect kinect;
 BlobDetection theBlobDetection;
-Arduino arduino;
+Serial myPort;
 
 //creo l'immagine sulla quale stampo i pixel con i dati di kinect
 PImage img;
@@ -31,13 +30,6 @@ boolean posizione11;
 boolean posizione12;
 boolean posizione13;
 boolean posizione14;
-boolean posizione15;
-
-//variabili controllo pin arduino
-int pin10 = 10;
-int pin11 = 11;
-int pin13 = 13;
-
 
 /*setto come distanza massima l'altezza sopra cui vengono iniziati a visualizzare i punti, 
  praticamente l'altezza minima che debba avere una persona affinchè funzioni tutto*/
@@ -63,7 +55,6 @@ color Martello11 = color(10, 252, 100);
 color Martello12 = color(60, 180, 250);
 color Martello13 = color(20, 225, 120);
 color Martello14 = color(90, 10, 200);
-color Martello15 = color(72, 170, 150);
 
 
 //variabile globale che serve per controllare la posizione del centroide del blob
@@ -87,39 +78,13 @@ void setup() {
   //treshold di luminosità per i pixel affinchè i blob vengano creati
   theBlobDetection.setThreshold(0.2f);
 
-  //inizializzo pins
-  arduino = new Arduino(this, Arduino.list()[2], 57600);
-  arduino.pinMode(pin10, Arduino.OUTPUT);
-  arduino.pinMode(pin11, Arduino.OUTPUT);
-  arduino.pinMode(pin13, Arduino.OUTPUT);
+  //inizializzo porta
+  String portName = Serial.list()[2]; //change the 0 to a 1 or 2 etc. to match your port
+  myPort = new Serial(this, portName, 9600);
 }
 
-  //variabili per attivazione contata
-
-  int beat = 350;
-  //martello1
-  boolean stateNOW1;
-  boolean stateBEFORE1 = false;
-  int previousMillis1 = 0;
-  int STARTmom1 = 0;
-  boolean ledState1 = false;
-  //martello2
-  boolean stateNOW2;
-  boolean stateBEFORE2 = false;
-  int previousMillis2 = 0;
-  int STARTmom2 = 0;
-  boolean ledState2 = false;
-  //martello3
-  boolean stateNOW3;
-  boolean stateBEFORE3 = false;
-  int previousMillis3 = 0;
-  int STARTmom3 = 0;
-  boolean ledState3 = false;
 
 void draw() {
-  
-  int tempoGlobale = millis();
-
   
   //salvo le informazioni di profondità di kinect in un array
   img.loadPixels();
@@ -210,10 +175,6 @@ void draw() {
   fill(Martello14);
   rect(450, 200, 70, 20, 15);
 
-  // area di attivazione martello 15
-  fill(Martello15);
-  rect(450, 300, 70, 20, 15);
-
 
   /* =============== 
    ===============
@@ -221,77 +182,28 @@ void draw() {
    ===============
    ===============
    */
+    
   
-  // INIZIO MARTELLO 1
-  
-  stateNOW1 = posizione1;
-  
-  if (stateNOW1 == true && stateNOW1 != stateBEFORE1) {
+    if (posizione1 == true) {
     println("martello 1 è attivo");
-    //inserire qui riga che dice ad arduino di tirare su il martello
-    arduino.digitalWrite(pin10, Arduino.HIGH);
-    ledState1 = !ledState1; 
-    STARTmom1 = tempoGlobale;
-  }
+    myPort.write('1'); 
+    } else {                           
+    myPort.write('0');          
+  }  
   
-  stateBEFORE1 = stateNOW1;
-
-  if(tempoGlobale - STARTmom1 >= beat && ledState1 == true){
-    previousMillis1 = tempoGlobale; 
-    arduino.digitalWrite(pin10, Arduino.LOW);
-    ledState1 = false;
-  }
-
-  // FINE MARTELLO 1
-     
-     
-     
-  //INIZIO MARTELLO 2
-  
-  stateNOW2 = posizione2;
-  
-  if (stateNOW2 == true && stateNOW2 != stateBEFORE2) {
+    
+    if (posizione2 == true) {
     println("martello 2 è attivo");
+    myPort.write('2'); 
+    } else {                           
+    myPort.write('0');          
+  }  
+  
+  
+  if (posizione3 == true) {
+    println("martello 3 è attivo");
     //inserire qui riga che dice ad arduino di tirare su il martello
-    arduino.digitalWrite(pin11, Arduino.HIGH);
-    ledState2 = !ledState2; 
-    STARTmom2 = tempoGlobale;
-  }
-  
-  stateBEFORE2 = stateNOW2;
-
-  if(tempoGlobale - STARTmom2 >= beat && ledState2 == true){
-    previousMillis2 = tempoGlobale; 
-    arduino.digitalWrite(pin11, Arduino.LOW);
-    ledState2 = false;
-  }
-
-  //FINE MARTELLO 2
-
-
-
-  //INIZIO MARTELLO 3
-
-    stateNOW3 = posizione3;
-  
-  if (stateNOW3 == true && stateNOW3 != stateBEFORE3) {
-    println("martello 2 è attivo");
-    //inserire qui riga che dice ad arduino di tirare su il martello
-    arduino.digitalWrite(pin13, Arduino.HIGH);
-    ledState3 = !ledState3; 
-    STARTmom3 = tempoGlobale;
-  }
-  
-  stateBEFORE3 = stateNOW3;
-
-  if(tempoGlobale - STARTmom3 >= beat && ledState3 == true){
-    previousMillis3 = tempoGlobale; 
-    arduino.digitalWrite(pin13, Arduino.LOW);
-    ledState3 = false;
-  }
-
-  //FINE MARTELLO 3
-
+  } 
 
 
   if (posizione4 == true) {
@@ -359,11 +271,6 @@ void draw() {
     //inserire qui riga che dice ad arduino di tirare su il martello
   }
 
-
-  if (posizione15 == true) {
-    println("martello 15 è attivo");
-    //inserire qui riga che dice ad arduino di tirare su il martello
-  }
 
   //prendo il colore alla posizione del centroide del blob (cioè della persona) e la comparo quando disegno i blob e i centroidi dei blob
   currentColor = get(posx, posy);
@@ -625,12 +532,6 @@ class BlobCenter {
       posizione14 = true;
     } else {
       posizione14 = false;
-    }
-
-    if (areacolor == Martello15) {
-      posizione15 = true;
-    } else {
-      posizione15 = false;
     }
   }
 }
