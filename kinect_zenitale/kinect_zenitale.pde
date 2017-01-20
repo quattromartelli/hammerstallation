@@ -85,7 +85,7 @@ void setup() {
 
 
 void draw() {
-  
+
   //salvo le informazioni di profondità di kinect in un array
   img.loadPixels();
   int[] depth = kinect.getRawDepth();
@@ -182,24 +182,20 @@ void draw() {
    ===============
    ===============
    */
-    
-  
-    if (posizione1 == true) {
+
+
+  if (posizione1 == true) {
     println("martello 1 è attivo");
-    myPort.write('1'); 
-    } else {                           
-    myPort.write('0');          
+  } else {
   }  
-  
-    
-    if (posizione2 == true) {
+
+
+  if (posizione2 == true) {
     println("martello 2 è attivo");
-    myPort.write('2'); 
-    } else {                           
-    myPort.write('0');          
+  } else {
   }  
-  
-  
+
+
   if (posizione3 == true) {
     println("martello 3 è attivo");
     //inserire qui riga che dice ad arduino di tirare su il martello
@@ -274,7 +270,6 @@ void draw() {
 
   //prendo il colore alla posizione del centroide del blob (cioè della persona) e la comparo quando disegno i blob e i centroidi dei blob
   currentColor = get(posx, posy);
-
 }
 
 /* ==============================
@@ -451,6 +446,7 @@ class BlobCenter {
     //se il colore del pixel della posizione del centroide corrisponde al colore dell'area di un martello, una booleana diventerà true
     if (areacolor == Martello1) { 
       posizione1 = true;
+      myPort.write('a');
     } else {
       posizione1= false;
     }
@@ -458,6 +454,7 @@ class BlobCenter {
 
     if (areacolor == Martello2) {
       posizione2 = true;
+      myPort.write('b');
     } else {
       posizione2 = false;
     }
