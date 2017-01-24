@@ -5,11 +5,11 @@ char valBEFORE;
 char valBEFORE2;
 
 
-int martello1 = 2;
-int martello2 = 3;
+int martello1 = 3;
+int martello2 = 2;
 
 unsigned long previousMillis = 0;
-const long beat = 350;
+const long beat = 400;
 unsigned long STARTmom = 0;
 int ledState = LOW;
 
@@ -19,8 +19,12 @@ int ledState2 = LOW;
 
 #include <SPI.h>
 #include <gpio_MCP23S17.h>   // import library
+#include <Wire.h>
+#include <Adafruit_PWMServoDriver.h>
 
-gpio_MCP23S17 mart(10,0x20);//instance (address A0,A1,A2 tied to +)
+Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
+
+gpio_MCP23S17 mart(10, 0x20); //instance (address A0,A1,A2 tied to +)
 
 
 void setup() {
@@ -30,6 +34,11 @@ void setup() {
 
 
   Serial.begin(9600); // Start serial communication at 9600 bps
+
+  pwm.begin();
+  pwm.setPWMFreq(100);  // This is the maximum PWM frequency
+  uint8_t twbrbackup = TWBR;
+  TWBR = 12;
 }
 
 void loop() {
@@ -40,8 +49,8 @@ void loop() {
 
 
   }
-  
-    unsigned long currentMillis2 = millis();
+
+  unsigned long currentMillis2 = millis();
 
 
   if (valNOW2 == 'b' && valNOW2 != valBEFORE2) {
@@ -50,9 +59,11 @@ void loop() {
     //in questo modo si capisce se lo stato si è alzato
     //che equivale alla pressione del pulsante
 
-    mart.gpioDigitalWrite(martello2, ledState2);  
+    mart.gpioDigitalWrite(martello2, ledState2);
     ledState2 = !ledState2;            //camio lo stato al led mettendolo alto
-    STARTmom2 = millis();             //in STARTmom imagazzino l'istante di accensione del led
+    STARTmom2 = millis();             //in STARTmom imagazzino l'istante di accensione del le
+
+    viola();
   }
 
   valBEFORE2 = valNOW2;
@@ -70,12 +81,12 @@ void loop() {
       //se lo stato del led è "acceso", cambialo in "spento"
     }
   }
-    mart.gpioDigitalWrite(martello2, ledState2);  
+  mart.gpioDigitalWrite(martello2, ledState2);
   //scrivi la variabile ledState al pin del led
   //quindi spegnilo o  accendilo
 
-//-----martello1 ----
-  
+  //-----martello1 ----
+
   if (Serial.available()) { // If data is available to read,
     valNOW = Serial.read(); // read it and store it in val
 
@@ -90,9 +101,11 @@ void loop() {
     //in questo modo si capisce se lo stato si è alzato
     //che equivale alla pressione del pulsante
 
-    mart.gpioDigitalWrite(martello1, ledState);  
+    mart.gpioDigitalWrite(martello1, ledState);
     ledState = !ledState;            //camio lo stato al led mettendolo alto
     STARTmom = millis();             //in STARTmom imagazzino l'istante di accensione del led
+
+    viola();
   }
 
   valBEFORE = valNOW;
@@ -110,12 +123,38 @@ void loop() {
       //se lo stato del led è "acceso", cambialo in "spento"
     }
   }
-    mart.gpioDigitalWrite(martello1, ledState);  
+  mart.gpioDigitalWrite(martello1, ledState);
   //scrivi la variabile ledState al pin del led
   //quindi spegnilo o  accendilo
 
+}
 
+void viola() {
+  pwm.setPWM(0, 0, 1043); //r
+  pwm.setPWM(2, 0, 738); //g
+  pwm.setPWM(1, 0, 2087); //b
 
+  pwm.setPWM(3, 0, 1043); //r
+  pwm.setPWM(4, 0, 738); //g
+  pwm.setPWM(5, 0, 2087); //b
+}
 
+void arancio() {
+  pwm.setPWM(0, 0, 4095); //r
+  pwm.setPWM(2, 0, 750); //g
+  pwm.setPWM(1, 0, 30); //b
 
+  pwm.setPWM(3, 0, 4095); //r
+  pwm.setPWM(4, 0, 750); //g
+  pwm.setPWM(5, 0, 30); //b
+}
+
+void giallo() {
+  pwm.setPWM(0, 0, 3886); //r
+  pwm.setPWM(2, 0, 3083); //g
+  pwm.setPWM(1, 0, 0); //b
+
+  pwm.setPWM(3, 0, 3886); //r
+  pwm.setPWM(4, 0, 3083); //g
+  pwm.setPWM(5, 0, 0); //b
 }
