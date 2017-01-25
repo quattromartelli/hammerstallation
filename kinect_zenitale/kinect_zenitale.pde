@@ -461,53 +461,72 @@ class BlobCenter {
 
     if (areacolor == Martello3) {
       posizione3 = true;
+            myPort.write('c');
+
     } else {
       posizione3 = false;
     }
 
     if (areacolor == Martello4) {
       posizione4 = true;
+            myPort.write('d');
+
     } else {
       posizione4 = false;
     }
 
     if (areacolor == Martello5) {
       posizione5 = true;
+            myPort.write('e');
+
     } else {
       posizione5 = false;
+      
     }
 
     if (areacolor == Martello6) {
       posizione6 = true;
+            myPort.write('f');
+
     } else {
       posizione6 = false;
     }
 
     if (areacolor == Martello7) {
       posizione7 = true;
+            myPort.write('g');
+
     } else {
       posizione7 = false;
     }
 
     if (areacolor == Martello8) {
       posizione8 = true;
+            myPort.write('h');
+
     } else {
       posizione8 = false;
     }
 
     if (areacolor == Martello9) {
       posizione9 = true;
+            myPort.write('i');
+
     } else {
       posizione9 = false;
     }
 
     if (areacolor == Martello10) {
       posizione10 = true;
+            myPort.write('l');
+
     } else {
       posizione10 = false;
     }
 
     if (areacolor == Martello11) {
+            myPort.write('m');
+
       posizione11 = true;
     } else {
       posizione11 = false;
@@ -515,18 +534,24 @@ class BlobCenter {
 
     if (areacolor == Martello12) {
       posizione12 = true;
+            myPort.write('n');
+
     } else {
       posizione12 = false;
     }
 
     if (areacolor == Martello13) {
       posizione13 = true;
+            myPort.write('o');
+
     } else {
       posizione13 = false;
     }
 
     if (areacolor == Martello14) {
       posizione14 = true;
+            myPort.write('p');
+
     } else {
       posizione14 = false;
     }
