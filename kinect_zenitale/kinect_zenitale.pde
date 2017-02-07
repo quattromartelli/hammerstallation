@@ -33,12 +33,12 @@ boolean posizione14;
 
 /*setto come distanza massima l'altezza sopra cui vengono iniziati a visualizzare i punti, 
  praticamente l'altezza minima che debba avere una persona affinchè funzioni tutto*/
-int distMax = 600; 
+int distMax = 900; 
 //900
 /*setto come distanza minima un numero che mi assicura di poter eliminare l'intorno della visione che non
  ci interessa tipo le cose che potrebbero essere affianco kinect per esempio le robe per fissarlo al soffitto*/
-int distMin = 100;
-//300
+int distMin = 200;
+//200
 
 //setto i colori per le aree di attivazione che disegno alla fine del draw()
 color Martello1 = color(0, 255, 150);
@@ -121,59 +121,59 @@ void draw() {
 
   // area di attivazione martello 1
   fill(Martello1);
-  rect(30, 100, 70, 70, 15);
+  rect(10, 28, 60, 130, 15);
 
   // area di attivazione martello 2
   fill(Martello2);
-  rect(30, 200, 70, 70, 15);
+  rect(80, 28, 160, 130, 15);
 
   // area di attivazione martello 3
   fill(Martello3);
-  rect(30, 300, 70, 70, 15);
+  rect(250, 28, 170, 130, 15);
 
   // area di attivazione martello 4
   fill(Martello4);
-  rect(150, 100, 70, 70, 15);
+  rect(430, 28, 145, 130, 15);
 
   // area di attivazione martello 5
   fill(Martello5);
-  rect(150, 200, 70, 20, 15);
+  rect(580, 28, 70, 130, 15);
 
   // area di attivazione martello 6
   fill(Martello6);
-  rect(150, 300, 70, 20, 15);
+  rect(10, 165, 70, 120, 15);
 
   // area di attivazione martello 7
   fill(Martello7);
-  rect(250, 100, 70, 20, 15);
+  rect(82, 165, 150, 120, 15);
 
   // area di attivazione martello 8
   fill(Martello8);
-  rect(250, 200, 70, 20, 15);
+  rect(235, 165, 230, 120, 15);
 
   // area di attivazione martello 9
   fill(Martello9);
-  rect(250, 300, 70, 20, 15);
+  rect(475, 165, 200, 120, 15);
 
   // area di attivazione martello 10
   fill(Martello10);
-  rect(350, 100, 70, 20, 15);
+  rect(10, 295, 55, 135, 15);
 
   // area di attivazione martello 11
   fill(Martello11);
-  rect(350, 200, 70, 20, 15);
+  rect(70, 295, 130, 135, 15);
 
   // area di attivazione martello 12
   fill(Martello12);
-  rect(350, 300, 70, 20, 15);
+  rect(205, 295,150, 135, 15);
 
   // area di attivazione martello 13
   fill(Martello13);
-  rect(450, 100, 70, 20, 15);
+  rect(355, 295, 120, 135, 15);
 
   // area di attivazione martello 14
   fill(Martello14);
-  rect(450, 200, 70, 20, 15);
+  rect(481, 295, 180, 135, 15);
 
 
   /* =============== 
@@ -270,6 +270,8 @@ void draw() {
 
   //prendo il colore alla posizione del centroide del blob (cioè della persona) e la comparo quando disegno i blob e i centroidi dei blob
   currentColor = get(posx, posy);
+  
+  //println(mouseX+" "+mouseY);
 }
 
 /* ==============================

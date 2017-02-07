@@ -30,20 +30,20 @@ char valBEFORE13;
 char valBEFORE14;
 
 
-int martello1 = 0;
-int martello2 = 1;
-int martello3 = 2;
-int martello4 = 3;
-int martello5 = 4;
-int martello6 = 5;
-int martello7 = 6;
-int martello8 = 7;
-int martello9 = 8;
-int martello10 = 9;
-int martello11 = 10;
-int martello12 = 11;
-int martello13 = 12;
-int martello14 = 13;
+int martello1 = 24;
+int martello2 = 23;
+int martello3 = 22;
+int martello4 = 25;
+int martello5 = 26;
+int martello6 = 27;
+int martello7 = 7;
+int martello8 = 8;
+int martello9 = 9;
+int martello10 = 14;
+int martello11 = 13;
+int martello12 = 12;
+int martello13 = 11;
+int martello14 = 10;
 
 
 const long beat = 400;
@@ -105,7 +105,6 @@ unsigned long STARTmom14 = 0;
 int ledState14 = LOW;
 
 #include <SPI.h>
-#include <gpio_MCP23S17.h>   // import library
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 
@@ -113,14 +112,26 @@ int ledState14 = LOW;
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 //secondo pwm declare
 Adafruit_PWMServoDriver pwm2 = Adafruit_PWMServoDriver(0x41);
-//declare adress multiplexer
-gpio_MCP23S17 mart(10, 0x20); //instance (address A0,A1,A2 tied to +)
 
 
 void setup() {
-  //multiplexer begin
-  mart.begin();//x.begin(1) will override automatic SPI initialization
-  mart.gpioPinMode(OUTPUT);
+
+  pinMode(martello1, OUTPUT);
+  pinMode(martello2, OUTPUT);
+  pinMode(martello3, OUTPUT);
+  pinMode(martello4, OUTPUT);
+  pinMode(martello5, OUTPUT);
+  pinMode(martello6, OUTPUT);
+  pinMode(martello7, OUTPUT);
+  pinMode(martello8, OUTPUT);
+  pinMode(martello9, OUTPUT);
+  pinMode(martello10, OUTPUT);
+  pinMode(martello11, OUTPUT);
+  pinMode(martello12, OUTPUT);
+  pinMode(martello13, OUTPUT);
+  pinMode(martello14, OUTPUT);
+
+
 
   Serial.begin(9600); // Start serial communication at 9600 bps
   //pwm begin
@@ -149,11 +160,11 @@ void loop() {
     //in questo modo si capisce se lo stato si è alzato
     //che equivale alla pressione del pulsante
 
-    mart.gpioDigitalWrite(martello14, ledState14);
+    digitalWrite(martello14, ledState14);
     ledState14 = !ledState14;            //camio lo stato al led mettendolo alto
     STARTmom14 = millis();             //in STARTmom imagazzino l'istante di accensione del le
 
-    giallo();
+    viola();
   }
 
   valBEFORE14 = valNOW14;
@@ -171,7 +182,7 @@ void loop() {
       //se lo stato del led è "acceso", cambialo in "spento"
     }
   }
-  mart.gpioDigitalWrite(martello14, ledState14);
+  digitalWrite(martello14, ledState14);
   //scrivi la variabile ledState al pin del led
   //quindi spegnilo o  accendilo
 
@@ -190,11 +201,11 @@ void loop() {
     //in questo modo si capisce se lo stato si è alzato
     //che equivale alla pressione del pulsante
 
-    mart.gpioDigitalWrite(martello13, ledState13);
+    digitalWrite(martello13, ledState13);
     ledState13 = !ledState13;            //camio lo stato al led mettendolo alto
     STARTmom13 = millis();             //in STARTmom imagazzino l'istante di accensione del le
 
-    giallo();
+    arancio();
   }
 
   valBEFORE13 = valNOW13;
@@ -212,7 +223,7 @@ void loop() {
       //se lo stato del led è "acceso", cambialo in "spento"
     }
   }
-  mart.gpioDigitalWrite(martello13, ledState13);
+  digitalWrite(martello13, ledState13);
   //scrivi la variabile ledState al pin del led
   //quindi spegnilo o  accendilo
 
@@ -232,7 +243,7 @@ void loop() {
     //in questo modo si capisce se lo stato si è alzato
     //che equivale alla pressione del pulsante
 
-    mart.gpioDigitalWrite(martello12, ledState12);
+    digitalWrite(martello12, ledState12);
     ledState12 = !ledState12;            //camio lo stato al led mettendolo alto
     STARTmom12 = millis();             //in STARTmom imagazzino l'istante di accensione del le
 
@@ -254,7 +265,7 @@ void loop() {
       //se lo stato del led è "acceso", cambialo in "spento"
     }
   }
-  mart.gpioDigitalWrite(martello12, ledState12);
+  digitalWrite(martello12, ledState12);
   //scrivi la variabile ledState al pin del led
   //quindi spegnilo o  accendilo
 
@@ -273,11 +284,11 @@ void loop() {
     //in questo modo si capisce se lo stato si è alzato
     //che equivale alla pressione del pulsante
 
-    mart.gpioDigitalWrite(martello11, ledState11);
+    digitalWrite(martello11, ledState11);
     ledState11 = !ledState11;            //camio lo stato al led mettendolo alto
     STARTmom11 = millis();             //in STARTmom imagazzino l'istante di accensione del le
 
-    giallo();
+    viola();
   }
 
   valBEFORE11 = valNOW11;
@@ -295,7 +306,7 @@ void loop() {
       //se lo stato del led è "acceso", cambialo in "spento"
     }
   }
-  mart.gpioDigitalWrite(martello11, ledState11);
+  digitalWrite(martello11, ledState11);
   //scrivi la variabile ledState al pin del led
   //quindi spegnilo o  accendilo
 
@@ -313,11 +324,11 @@ void loop() {
     //in questo modo si capisce se lo stato si è alzato
     //che equivale alla pressione del pulsante
 
-    mart.gpioDigitalWrite(martello10, ledState10);
+    digitalWrite(martello10, ledState10);
     ledState10 = !ledState10;            //camio lo stato al led mettendolo alto
     STARTmom10 = millis();             //in STARTmom imagazzino l'istante di accensione del le
 
-    giallo();
+    arancio();
   }
 
   valBEFORE10 = valNOW10;
@@ -335,7 +346,7 @@ void loop() {
       //se lo stato del led è "acceso", cambialo in "spento"
     }
   }
-  mart.gpioDigitalWrite(martello10, ledState10);
+  digitalWrite(martello10, ledState10);
   //scrivi la variabile ledState al pin del led
   //quindi spegnilo o  accendilo
 
@@ -353,7 +364,7 @@ void loop() {
     //in questo modo si capisce se lo stato si è alzato
     //che equivale alla pressione del pulsante
 
-    mart.gpioDigitalWrite(martello9, ledState9);
+    digitalWrite(martello9, ledState9);
     ledState9 = !ledState9;            //camio lo stato al led mettendolo alto
     STARTmom9 = millis();             //in STARTmom imagazzino l'istante di accensione del le
 
@@ -375,7 +386,7 @@ void loop() {
       //se lo stato del led è "acceso", cambialo in "spento"
     }
   }
-  mart.gpioDigitalWrite(martello9, ledState9);
+  digitalWrite(martello9, ledState9);
   //scrivi la variabile ledState al pin del led
   //quindi spegnilo o  accendilo
 
@@ -393,11 +404,11 @@ void loop() {
     //in questo modo si capisce se lo stato si è alzato
     //che equivale alla pressione del pulsante
 
-    mart.gpioDigitalWrite(martello8, ledState8);
+   digitalWrite(martello8, ledState8);
     ledState8 = !ledState8;            //camio lo stato al led mettendolo alto
     STARTmom8 = millis();             //in STARTmom imagazzino l'istante di accensione del le
 
-    giallo();
+    viola();
   }
 
   valBEFORE8 = valNOW8;
@@ -415,7 +426,7 @@ void loop() {
       //se lo stato del led è "acceso", cambialo in "spento"
     }
   }
-  mart.gpioDigitalWrite(martello8, ledState8);
+  digitalWrite(martello8, ledState8);
   //scrivi la variabile ledState al pin del led
   //quindi spegnilo o  accendilo
 
@@ -433,11 +444,11 @@ void loop() {
     //in questo modo si capisce se lo stato si è alzato
     //che equivale alla pressione del pulsante
 
-    mart.gpioDigitalWrite(martello7, ledState7);
+    digitalWrite(martello7, ledState7);
     ledState7 = !ledState7;            //camio lo stato al led mettendolo alto
     STARTmom7 = millis();             //in STARTmom imagazzino l'istante di accensione del le
 
-    giallo();
+    arancio();
   }
 
   valBEFORE7 = valNOW7;
@@ -455,7 +466,7 @@ void loop() {
       //se lo stato del led è "acceso", cambialo in "spento"
     }
   }
-  mart.gpioDigitalWrite(martello7, ledState7);
+  digitalWrite(martello7, ledState7);
   //scrivi la variabile ledState al pin del led
   //quindi spegnilo o  accendilo
 
@@ -473,7 +484,7 @@ void loop() {
     //in questo modo si capisce se lo stato si è alzato
     //che equivale alla pressione del pulsante
 
-    mart.gpioDigitalWrite(martello6, ledState6);
+    digitalWrite(martello6, ledState6);
     ledState6 = !ledState6;            //camio lo stato al led mettendolo alto
     STARTmom6 = millis();             //in STARTmom imagazzino l'istante di accensione del le
 
@@ -495,7 +506,7 @@ void loop() {
       //se lo stato del led è "acceso", cambialo in "spento"
     }
   }
-  mart.gpioDigitalWrite(martello6, ledState6);
+  digitalWrite(martello6, ledState6);
   //scrivi la variabile ledState al pin del led
   //quindi spegnilo o  accendilo
 
@@ -513,11 +524,11 @@ void loop() {
     //in questo modo si capisce se lo stato si è alzato
     //che equivale alla pressione del pulsante
 
-    mart.gpioDigitalWrite(martello5, ledState5);
+    digitalWrite(martello5, ledState5);
     ledState5 = !ledState5;            //camio lo stato al led mettendolo alto
     STARTmom5 = millis();             //in STARTmom imagazzino l'istante di accensione del le
 
-    giallo();
+    viola();
   }
 
   valBEFORE5 = valNOW5;
@@ -535,7 +546,7 @@ void loop() {
       //se lo stato del led è "acceso", cambialo in "spento"
     }
   }
-  mart.gpioDigitalWrite(martello5, ledState5);
+  digitalWrite(martello5, ledState5);
   //scrivi la variabile ledState al pin del led
   //quindi spegnilo o  accendilo
 
@@ -553,11 +564,11 @@ void loop() {
     //in questo modo si capisce se lo stato si è alzato
     //che equivale alla pressione del pulsante
 
-    mart.gpioDigitalWrite(martello4, ledState4);
+    digitalWrite(martello4, ledState4);
     ledState4 = !ledState4;            //camio lo stato al led mettendolo alto
     STARTmom4 = millis();             //in STARTmom imagazzino l'istante di accensione del le
 
-    giallo();
+    arancio();
   }
 
   valBEFORE4 = valNOW4;
@@ -575,7 +586,7 @@ void loop() {
       //se lo stato del led è "acceso", cambialo in "spento"
     }
   }
-  mart.gpioDigitalWrite(martello4, ledState4);
+  digitalWrite(martello4, ledState4);
   //scrivi la variabile ledState al pin del led
   //quindi spegnilo o  accendilo
 
@@ -594,7 +605,7 @@ void loop() {
     //in questo modo si capisce se lo stato si è alzato
     //che equivale alla pressione del pulsante
 
-    mart.gpioDigitalWrite(martello3, ledState3);
+    digitalWrite(martello3, ledState3);
     ledState3 = !ledState3;            //camio lo stato al led mettendolo alto
     STARTmom3 = millis();             //in STARTmom imagazzino l'istante di accensione del le
 
@@ -616,7 +627,7 @@ void loop() {
       //se lo stato del led è "acceso", cambialo in "spento"
     }
   }
-  mart.gpioDigitalWrite(martello3, ledState3);
+  digitalWrite(martello3, ledState3);
   //scrivi la variabile ledState al pin del led
   //quindi spegnilo o  accendilo
 
@@ -637,7 +648,7 @@ void loop() {
     //in questo modo si capisce se lo stato si è alzato
     //che equivale alla pressione del pulsante
 
-    mart.gpioDigitalWrite(martello2, ledState2);
+    digitalWrite(martello2, ledState2);
     ledState2 = !ledState2;            //camio lo stato al led mettendolo alto
     STARTmom2 = millis();             //in STARTmom imagazzino l'istante di accensione del le
 
@@ -659,7 +670,7 @@ void loop() {
       //se lo stato del led è "acceso", cambialo in "spento"
     }
   }
-  mart.gpioDigitalWrite(martello2, ledState2);
+  digitalWrite(martello2, ledState2);
   //scrivi la variabile ledState al pin del led
   //quindi spegnilo o  accendilo
 
@@ -679,11 +690,11 @@ void loop() {
     //in questo modo si capisce se lo stato si è alzato
     //che equivale alla pressione del pulsante
 
-    mart.gpioDigitalWrite(martello1, ledState);
+    digitalWrite(martello1, ledState);
     ledState = !ledState;            //camio lo stato al led mettendolo alto
     STARTmom = millis();             //in STARTmom imagazzino l'istante di accensione del led
 
-    viola();
+    arancio();
   }
 
   valBEFORE = valNOW;
@@ -701,7 +712,7 @@ void loop() {
       //se lo stato del led è "acceso", cambialo in "spento"
     }
   }
-  mart.gpioDigitalWrite(martello1, ledState);
+ digitalWrite(martello1, ledState);
   //scrivi la variabile ledState al pin del led
   //quindi spegnilo o  accendilo
 
